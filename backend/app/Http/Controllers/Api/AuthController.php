@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\App;
 
 class AuthController extends Controller
 {
@@ -169,6 +170,35 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Password changed successfully'
+        ]);
+    }
+
+    /**
+     * Get authenticated user data - Example methods
+     */
+    public function getUserData(Request $request)
+    {
+        // Method 1: Using $request->user()
+        $user = $request->user();
+        
+        // Method 2: Using Auth facade
+        $user2 = Auth::user();
+        
+        // Method 4: Check if user is authenticated
+        if (Auth::check()) {
+            $user4 = Auth::user();
+        }
+        
+        // Method 5: Get user ID
+        $userId = Auth::id();
+        
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'user' => $user,
+                'user_id' => $userId,
+                'is_authenticated' => Auth::check()
+            ]
         ]);
     }
 } 

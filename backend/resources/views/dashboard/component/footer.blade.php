@@ -7,7 +7,7 @@
             <div class="flex items-center space-x-4 text-sm text-gray-600">
                 <span>Version 1.0.0</span>
                 <span>•</span>
-                <span>Laravel {{ app()->version() }}</span>
+                <span>Laravel {{ app()->version() }} by Team DUT</span>
             </div>
         </div>
     </div>
