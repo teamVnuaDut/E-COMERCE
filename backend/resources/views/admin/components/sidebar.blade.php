@@ -11,7 +11,7 @@
     <nav class="sidebar-menu">
         <a href="#" class="active"><i class="fas fa-th-large"></i> Dashboard</a>
         <a href="#"><i class="fas fa-users"></i> Users</a>
-        <a href="#"><i class="fas fa-box"></i> Products</a>
+        <a href="{{ route('admin.products') }}"><i class="fas fa-box"></i> Products</a>
         <a href="#"><i class="fas fa-shopping-cart"></i> Orders</a>
         <a href="#"><i class="fas fa-cog"></i> SETTINGS</a>
         <a href="#"><i class="fas fa-sliders-h"></i> Settings</a>
