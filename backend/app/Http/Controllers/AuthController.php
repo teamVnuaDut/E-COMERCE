@@ -5,158 +5,60 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    /**
-     * Show login form
-     */
     public function showLogin()
     {
-        
-        return view('dashboard.auth.login');
+        return view('auth.pages.login');
     }
 
-    /**
-     * Handle login form submission
-     */
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-        
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $credentials = $request->only('email', 'password');
-        $remember = $request->has('remember');
-
-        if (Auth::attempt($credentials, $remember)) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'));
-        }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->withInput($request->only('email'));
-    }
-
-    /**
-     * Show register form
-     */
     public function showRegister()
     {
-        return view('dashboard.auth.register');
+        return view('auth.pages.register');
     }
 
-    /**
-     * Handle register form submission
-     */
+    public function showForgotPassword()
+    {
+        return view('auth.pages.forgot-password');
+    }
+
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        // dd($request->all(), session()->token());
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'terms' => 'required|accepted',
         ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Create the user
+        $user = User::create($validated);
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Account created successfully!');
+        return redirect()->route('show.login');
     }
 
-    /**
-     * Show forgot password form
-     */
-    public function showForgotPassword()
+    public function login(Request $request)
     {
-        return view('dashboard.auth.forgot-password');
-    }
-
-    /**
-     * Handle forgot password form submission
-     */
-    public function forgotPassword(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with('success', __($status))
-            : back()->withErrors(['email' => __($status)]);
-    }
-
-    /**
-     * Show reset password form
-     */
-    public function showResetPassword(Request $request, $token = null)
-    {
-        return view('dashboard.auth.reset-password', ['token' => $token, 'email' => $request->email]);
-    }
-
-    /**
-     * Handle reset password form submission
-     */
-    public function resetPassword(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'token' => 'required',
+        $validated = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string',
         ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+        if (Auth::attempt($validated)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('admin.dashboard');
         }
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-
-                $user->save();
-            }
-        );
-
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('success', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+        throw ValidationException::withMessages([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
-    /**
-     * Logout user
-     */
     public function logout(Request $request)
     {
         Auth::logout();
@@ -164,6 +66,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'Logged out successfully!');
+        return redirect()->route('show.login');
     }
-} 
+}
