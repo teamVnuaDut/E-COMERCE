@@ -3,16 +3,20 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register()
     {
-        //
+        if ($this->app->environment('local')) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+            // Tắt middleware không cần thiết
+            // $this->app->make('Illuminate\Contracts\Http\Kernel')
+            //     ->pushMiddleware(\App\Http\Middleware\TrustProxies::class);
+        }
     }
 
     /**
@@ -20,19 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Add custom helper method to get authenticated user data
-        app()->macro('getDataUser', function () {
-            return Auth::user();
-        });
-        
-        // Add custom helper method to check if user is authenticated
-        app()->macro('isUserAuthenticated', function () {
-            return Auth::check();
-        });
-        
-        // Add custom helper method to get user ID
-        app()->macro('getUserId', function () {
-            return Auth::id();
-        });
+        //
     }
 }
