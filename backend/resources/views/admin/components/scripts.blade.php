@@ -45,4 +45,19 @@
             document.querySelector('.sidebar').classList.remove('active');
         }
     });
+
+    // Listen for theme changes
+    Livewire.on('themeChanged', (theme) => {
+        document.documentElement.className = theme;
+        localStorage.setItem('theme', theme);
+    });
+
+    // Load theme from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.className = savedTheme;
+        }
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
