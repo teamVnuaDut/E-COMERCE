@@ -13,7 +13,7 @@
 
     <main class="ml-64 p-8 pt-24">
 
-        <livewire:overview />
+        <livewire:pages.product.create />
     </main>
 
     @include('admin.components.footer')
