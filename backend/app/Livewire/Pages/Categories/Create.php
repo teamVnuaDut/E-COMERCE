@@ -8,8 +8,6 @@ use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    use WithFileUploads;
-
     public $name;
     public $parent_id;
     public $status = 'active';
@@ -23,6 +21,14 @@ class Create extends Component
         'status' => 'required|in:active,inactive',
         'description' => 'nullable|string',
         'slug' => 'required|string|max:255|unique:categories,slug',
+    ];
+
+    protected $fillable = [
+        'name',
+        'parent_id',
+        'status',
+        'description',
+        'slug',
     ];
 
     protected $messages = [
@@ -52,29 +58,20 @@ class Create extends Component
         return redirect()->route('categories.index');
     }
 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-
-    public function resetForm()
-    {
-        $this->reset([
-            'name',
-            'parent_id',
-            'status',
-            'description',
-            'slug',
-        ]);
-    }
-
     public function cancel()
     {
         return redirect()->route('admin.categories');
     }
 
+    public function mount()
+    {
+        $this->categories = Categories::all();
+    }
+
     public function render()
     {
-        return view('livewire.pages.categories.create');
+        return view('livewire.pages.categories.create', [
+            'categories' => $this->categories,
+        ]);
     }
 }

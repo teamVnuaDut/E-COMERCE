@@ -20,6 +20,13 @@ class Index extends Component
         'pageSize' => 'required|integer|min:5|max:100',
     ];
 
+    protected $fillable = [
+        'theme',
+        'notification',
+        'language',
+        'pageSize',
+    ];
+
     protected $messages = [
         'theme.required' => 'Chủ đề là bắt buộc.',
         'theme.in' => 'Chủ đề không hợp lệ.',

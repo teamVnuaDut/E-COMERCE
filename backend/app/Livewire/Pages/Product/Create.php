@@ -29,6 +29,14 @@ class Create extends Component
         'category_id' => 'required|exists:categories,id',
     ];
 
+    protected $fillable = [
+        'name',
+        'description',
+        'image',
+        'price',
+        'category_id',
+    ];
+
     protected $messages = [
         'name.required' => 'Tên sản phẩm là bắt buộc.',
         'description.required' => 'Mô tả sản phẩm là bắt buộc.',

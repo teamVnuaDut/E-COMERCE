@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        //
+        Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->string('theme')->default('light');
-            $table->boolean('notification')->default(true);
-            $table->string('language')->default('vi');
-            $table->integer('pageSize')->default(10);
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->string('logo')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        //
+        Schema::dropIfExists('brands');
     }
 };
