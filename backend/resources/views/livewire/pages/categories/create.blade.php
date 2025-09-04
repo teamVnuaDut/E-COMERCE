@@ -31,7 +31,9 @@
                 <select wire:model="parent_id" id="parent_id"
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
                     <option value="">-- Không có danh mục cha --</option>
-                    <option value=""></option>
+                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
                 </select>
                 @error('parent_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
@@ -55,7 +57,7 @@
                 </button>
                 <button type="submit"
                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-                    Cập Nhật Danh Mục
+                    Tạo Danh Mục
                 </button>
             </div>
         </form>
