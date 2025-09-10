@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('categories', function (Blueprint $table) {
+            // Primary key
+            $table->id();
+
+            // Thông tin danh mục
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->string('image')->nullable();
+
+            // Phân cấp danh mục (nested categories)
+            $table->unsignedBigInteger('parent_id')->nullable();
+
+            // SEO Metadata
+            $table->string('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->string('meta_keywords')->nullable();
+
+            // Trạng thái
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->integer('sort_order')->default(0);
+
+            // Timestamps
+            $table->timestamps();
+            $table->softDeletes();
+
+            // Foreign key constraint
+            $table->foreign('parent_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('categories');
+    }
+};

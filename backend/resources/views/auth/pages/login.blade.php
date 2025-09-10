@@ -5,83 +5,60 @@
 @section('page-subtitle', 'Please sign in to your account')
 
 @section('auth-content')
-@guest
-<form action="{{ route('login') }}" method="POST" class="space-y-4">
-    @csrf
+<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Đăng nhập</h2>
 
-    <!-- Email Input -->
-    <div class="space-y-2">
-        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-        <input type="email" id="email" name="email"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Enter your email" required value="{{ old('email') }}">
-
-        @error('email')
-        <span class="text-sm text-red-600">{{ $message }}</span>
-        @enderror
-    </div>
-
-    <!-- Password Input -->
-    <div class="space-y-2">
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" id="password" name="password"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Enter your password" required>
-        @error('password')
-        <span class="text-sm text-red-600">{{ $message }}</span>
-        @enderror
-    </div>
-
-    <!-- Remember Me & Forgot Password -->
-    <div class="flex items-center justify-between">
-        <label class="flex items-center space-x-2">
-            <input type="checkbox" name="remember" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-            <span class="text-sm text-gray-600">Remember me</span>
-        </label>
-        <a href="{{ route('show.forgot.password') }}" class="text-sm text-blue-600 hover:text-blue-800">Forgot password?</a>
-    </div>
-
-    <!-- Social Login Buttons -->
-    <div class="space-y-4">
-        <div class="relative flex items-center">
-            <div class="flex-grow border-t border-gray-300"></div>
-            <span class="mx-4 flex-shrink text-sm text-gray-500">Or continue with</span>
-            <div class="flex-grow border-t border-gray-300"></div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-            <button type="button" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                <img src="{{ asset('icons/google.svg') }}" alt="Google" class="w-5 h-5 mr-2">
-                Google
-            </button>
-            <button type="button" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                <img src="{{ asset('icons/facebook.svg') }}" alt="Facebook" class="w-5 h-5 mr-2">
-                Facebook
-            </button>
-        </div>
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-        Sign In
-    </button>
-
-    <!-- Display General Error Message -->
-    <!-- Validation error-->
     @if ($errors->any())
-    <ul class="px-4 py-2 bg-red-100">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
         @foreach ($errors->all() as $error)
-        <li class="my-2 text-red-500">{{ $error}}</li>
+        <p>{{ $error }}</p>
         @endforeach
-    </ul>
+    </div>
     @endif
-</form>
-@endguest
-@endsection
 
-@section('auth-footer')
-<p class="text-center text-sm text-gray-600">
-    Don't have an account?
-    <a href="{{ route('show.register') }}" class="font-medium text-blue-600 hover:text-blue-500">Sign up</a>
-</p>
+    @if (session('status'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        {{ session('status') }}
+    </div>
+    @endif
+
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" id="email" value="{{ old('email') }}"
+                class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                required autofocus>
+        </div>
+
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+            <input type="password" name="password" id="password"
+                class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                required>
+        </div>
+
+        <div class="mb-4 flex items-center">
+            <input type="checkbox" name="remember" id="remember"
+                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+            <label for="remember" class="ml-2 block text-sm text-gray-900">Ghi nhớ đăng nhập</label>
+        </div>
+
+        <div class="mb-4">
+            <button type="submit"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Đăng nhập
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-6 text-center">
+        <p class="text-sm text-gray-600">Chưa có tài khoản?
+            <a href="{{ route('register') }}" class="text-blue-500 hover:text-blue-700">
+                Đăng ký ngay
+            </a>
+        </p>
+    </div>
+</div>
 @endsection

@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <nav class="sidebar-menu">
+    <!-- <nav class="sidebar-menu">
         <a href="#"
             :class="{ 'active': activeMenu === 'dashboard' }"
             @click="activeMenu = 'dashboard'"
@@ -26,7 +26,7 @@
             <i class="fas fa-users mr-3"></i> Thông tin người dùng
         </a>
 
-        <a href="{{ route('admin.products') }}"
+        <a href="#"
             :class="{ 'active': activeMenu === 'products' }"
             @click="activeMenu = 'products'"
             class="flex items-center px-4 py-3 transition-colors">
@@ -40,26 +40,26 @@
             <i class="fas fa-shopping-cart mr-3"></i> Đơn hàng
         </a>
 
-        <a href="{{ route('admin.categories') }}"
+        <a href="#"
             :class="{ 'active': activeMenu === 'categories' }"
             @click="activeMenu = 'categories'"
             class="flex items-center px-4 py-3 transition-colors">
             <i class="fas fa-th-list mr-3"></i> Danh mục sản phẩm
         </a>
 
-        <a href="{{ route('admin.settings') }}"
+        <a href="#"
             :class="{ 'active': activeMenu === 'settings' }"
             @click="activeMenu = 'settings'"
             class="flex items-center px-4 py-3 transition-colors">
             <i class="fas fa-cog mr-3"></i> Cài đặt
-        </a>
+        </a> -->
 
-        <!-- Logout button -->
-        <form action="{{ route('logout') }}" method="POST" class="px-4 py-3">
-            @csrf
-            <button type="submit" class="flex items-center text-gray-300 hover:text-white transition-colors w-full">
-                <i class="fas fa-sign-out-alt mr-3"></i> Logout
-            </button>
-        </form>
+    <!-- Logout button -->
+    <form action="{{ route('logout') }}" method="POST" class="px-4 py-3">
+        @csrf
+        <button type="submit" class="flex items-center text-gray-300 hover:text-white transition-colors w-full">
+            <i class="fas fa-sign-out-alt mr-3"></i> Logout
+        </button>
+    </form>
     </nav>
 </aside>
