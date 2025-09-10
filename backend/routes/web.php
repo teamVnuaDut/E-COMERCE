@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,7 +15,32 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'registration')->name('register');
     Route::post('register', 'postRegistration')->name('register.post');
     Route::post('logout', 'logout')->name('logout');
-
-    //Dashboard route
-    Route::get('dashboard', 'dashboard')->name('dashboard')->middleware('auth');
 });
+
+// Admin
+Route::middleware(['auth', 'check_role:admin'])
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+    });
+
+// Manager
+Route::middleware(['auth', 'check_role:manager'])
+    ->prefix('manager')
+    ->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('manager.dashboard');
+    });
+
+// Staff
+Route::middleware(['auth', 'check_role:staff'])
+    ->prefix('staff')
+    ->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('staff.dashboard');
+    });
+
+// Customer
+Route::middleware(['auth', 'check_role:customer'])
+    ->prefix('customer')
+    ->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('customer.dashboard');
+    });
