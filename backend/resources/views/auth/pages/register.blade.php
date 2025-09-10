@@ -1,76 +1,96 @@
 @extends('auth.layouts.auth-layout')
 
-@section('title', 'Register - MyApp')
-@section('page-title', 'Create Account')
-@section('page-subtitle', 'Get started with our platform')
+@section('title', 'Đăng ký - MyApp')
+@section('page-title', 'Tạo tài khoản')
+@section('page-subtitle', 'Bắt đầu với nền tảng của chúng tôi')
 
 @section('auth-content')
-<form action="{{ route('register') }}" method="POST" class="space-y-4">
-    @csrf
-
-    <!-- Name Input -->
-    <div class="space-y-2">
-        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-        <input type="text" id="name" name="name"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Enter your name" required value="{{ old('name') }}">
-    </div>
-
-    <!-- Email Input -->
-    <div class="space-y-2">
-        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-        <input type="email" id="email" name="email"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Enter your email" required value="{{ old('email') }}">
-    </div>
-
-    <!-- Password Input -->
-    <div class="space-y-2">
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" id="password" name="password"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Create a password" required>
-    </div>
-
-    <!-- Password Confirmation -->
-    <div class="space-y-2">
-        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-        <input type="password" id="password_confirmation" name="password_confirmation"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Confirm your password" required>
-    </div>
-
-    <!-- Terms Agreement -->
-    <div class="flex items-center space-x-2">
-        <input type="checkbox" id="terms" name="terms"
-            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" required>
-        <label for="terms" class="text-sm text-gray-600">
-            I agree to the <a href="#" class="text-blue-600 hover:text-blue-800">Terms of Service</a>
-        </label>
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit"
-        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
-        Create Account
-    </button>
-
-    <!-- Validation error-->
+<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <!-- Hiển thị lỗi -->
     @if ($errors->any())
-    <ul class="px-4 py-2 bg-red-100">
-        @foreach ($errors->all() as $error)
-        <li class="my-2 text-red-500">{{ $error}}</li>
-        @endforeach
-    </ul>
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-0 rounded mb-4">
+        <ul class="list-disc list-inside space-y-1">
+            @foreach ($errors->all() as $error)
+            <li class="text-sm">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
-</form>
-@endsection
 
-@section('auth-footer')
-<p class="text-center text-sm text-gray-600 mt-4">
-    Already have an account?
-    <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500">
-        Sign in
-    </a>
-</p>
+    <!-- Hiển thị thông báo thành công -->
+    @if (session('status'))
+    <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-4">
+        <p class="text-sm">{{ session('status') }}</p>
+    </div>
+    @endif
+
+    <form action="{{ route('register') }}" method="POST" class="space-y-4">
+        @csrf
+
+        <!-- Họ tên -->
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Họ tên *</label>
+            <input type="text" id="name" name="name" value="{{ old('name') }}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Nguyễn Văn A" required>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="email@example.com" required>
+        </div>
+
+        <!-- Số điện thoại -->
+        <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại *</label>
+            <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="0912345678" required>
+        </div>
+
+        <!-- Mật khẩu -->
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu *</label>
+            <input type="password" id="password" name="password"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Ít nhất 8 ký tự" required>
+        </div>
+
+        <!-- Xác nhận mật khẩu -->
+        <div>
+            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Xác nhận mật khẩu *</label>
+            <input type="password" id="password_confirmation" name="password_confirmation"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Nhập lại mật khẩu" required>
+        </div>
+
+        <!-- Điều khoản -->
+        <div class="flex items-start space-x-2">
+            <input type="checkbox" id="terms" name="terms"
+                class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500" required>
+            <label for="terms" class="text-sm text-gray-600">
+                Tôi đồng ý với <a href="#" class="text-blue-600 hover:text-blue-800 underline">điều khoản dịch vụ</a>
+                và <a href="#" class="text-blue-600 hover:text-blue-800 underline">chính sách bảo mật</a>
+            </label>
+        </div>
+
+        <!-- Nút đăng ký -->
+        <button type="submit"
+            class="w-full bg-blue-600 text-white py-2.5 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium">
+            Đăng ký
+        </button>
+    </form>
+
+    <!-- Đăng nhập -->
+    <div class="mt-6 text-center pt-4 border-t border-gray-200">
+        <p class="text-sm text-gray-600">Đã có tài khoản?
+            <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-800 font-medium underline">
+                Đăng nhập ngay
+            </a>
+        </p>
+    </div>
+</div>
 @endsection

@@ -48,7 +48,7 @@
     </style>
 </head>
 
-<body class="auth-body">
+<body class="auth-body bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="auth-container">
         <!-- Header -->
         <div class="auth-header text-center mb-6">

@@ -15,9 +15,21 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            // AttributeSeeder::class,
+            // BrandSeeder::class,
+            // CategorySeeder::class,
+            // SupplierSeeder::class,
+            UserSeeder::class,
+            // ProductSeeder::class,
+            // CouponSeeder::class,
+            // CartSeeder::class,
+            // CartItemSeeder::class,
+            // OrderSeeder::class,
+            // OrderItemSeeder::class,
+            // PaymentSeeder::class,
+            // ProductImageSeeder::class,
+            // ShippingSeeder::class,
         ]);
     }
 }
