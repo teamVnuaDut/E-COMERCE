@@ -32,7 +32,21 @@ class AuthController
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')->withSuccess('You have successfully loggedin');
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('admin.dashboard');
+                case 'manager':
+                    return redirect()->route('manager.dashboard');
+                case 'staff':
+                    return redirect()->route('staff.dashboard');
+                case 'customer':
+                    return redirect()->route('customer.dashboard');
+                default:
+                    Auth::logout();
+                    return redirect()->route('login')->withErrors('Role không hợp lệ.');
+            }
         }
 
         return redirect("login")->withErrors('Opps, You have invalid credentials');
@@ -52,27 +66,6 @@ class AuthController
         Auth::login($user);
 
         return redirect("dashboard")->withSuccess('Great! You have Successfully loggedin');
-    }
-
-    public function dashboard()
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            if ($user->role === 'admin') {
-                return view('admin.index');
-            } else if ($user->role === 'manager') {
-                return view('manager.index');
-            } else if ($user->role === 'staff') {
-                return view('staff.index');
-            } else if ($user->role === 'customer') {
-                return view('home');
-            }
-
-            return redirect("login")->withErrors('Opps! You do not have access as admin');
-        }
-
-        return redirect("login")->withErrors('Please login first');
     }
 
     /**
