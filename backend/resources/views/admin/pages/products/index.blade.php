@@ -1,12 +1,8 @@
-@extends('admin.layout.app')
+{{-- resources/views/admin/pages/products/index.blade.php --}}
+@extends('admin.layouts.admin')
+
+@section('title', 'Danh sách sản phẩm')
 
 @section('content')
-<div class="container">
-    <h1>Quản lý sản phẩm</h1>
-
-    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Thêm sản phẩm</a>
-
-    <!-- Sử dụng Livewire component -->
-    @livewire('admin.components.product-list')
-</div>
+@livewire('admin.pages.product.index')
 @endsection

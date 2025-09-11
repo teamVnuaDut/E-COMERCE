@@ -37,6 +37,14 @@
             <span>Quản lý người dùng</span>
         </a>
 
+        <a href="{{ route('admin.product.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'products' }"
+            @click="activeMenu = 'products'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fas fa-box mr-3"></i>
+            <span>Quản lý sản phẩm</span>
+        </a>
+
         <a href="#"
             :class="{ 'bg-gray-800 text-white': activeMenu === 'settings' }"
             @click="activeMenu = 'settings'"

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Livewire\Admin\Pages\Product\Index as ProductIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +23,17 @@ Route::middleware(['auth', 'check_role:admin'])
     ->prefix('admin')
     ->group(function () {
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+
+        //product
+        Route::get('/admin/products', function () {
+            return view('admin.pages.products.index');
+        })->name('admin.product.index');
+        Route::get('/admin/products/create', function () {
+            return view('admin.pages.products.create');
+        })->name('admin.product.create');
+        Route::get('/admin/products/{id}/edit', function () {
+            return view('admin.pages.products.edit');
+        })->name('admin.product.edit');
     });
 
 // Manager

@@ -7,12 +7,12 @@
 
     <form wire:submit="login">
         <div>
-            <input type="email" wire:model="email" placeholder="Email">
+            <input type="email" wire:model.live="email" placeholder="Email">
             @error('email') <span style="color: red;">{{ $message }}</span> @enderror
         </div>
 
         <div>
-            <input type="password" wire:model="password" placeholder="Mật khẩu">
+            <input type="password" wire:model.live="password" placeholder="Mật khẩu">
             @error('password') <span style="color: red;">{{ $message }}</span> @enderror
         </div>
 
