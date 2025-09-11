@@ -9,8 +9,8 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow hover:scale-105 transform transition">
             <h2 class="text-lg font-semibold">👤 Người dùng</h2>
-            <p class="text-3xl font-bold mt-2">120</p>
-            <p class="text-sm text-blue-100">+10 tuần này</p>
+            <p class="text-3xl font-bold mt-2">{{ $totalUsers }}</p>
+            <p class="text-sm text-blue-100">+{{ $newUsersThisWeek }} tuần này</p>
         </div>
 
         <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-2xl shadow hover:scale-105 transform transition">
