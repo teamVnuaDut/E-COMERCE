@@ -130,7 +130,17 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/payment/create', function () {
             return view('admin.pages.payment.create');
         })->name('admin.payment.create');
+
         //Shipping
+        Route::get('/admin/shipping', function () {
+            return view('admin.pages.shipping.index');
+        })->name('admin.shipping.index');
+        Route::get('/admin/shipping/{id}/edit', function () {
+            return view('admin.pages.shipping.edit');
+        })->name('admin.shipping.edit');
+        Route::get('/admin/shipping/create', function () {
+            return view('admin.pages.shipping.create');
+        })->name('admin.shipping.create');
     });
 
 // Manager
