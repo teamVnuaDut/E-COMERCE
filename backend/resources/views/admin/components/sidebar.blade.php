@@ -42,8 +42,83 @@
             @click="activeMenu = 'products'"
             class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
             <i class="fas fa-box mr-3"></i>
-            <span>Quản lý sản phẩm</span>
+            <span>Sản phẩm</span>
         </a>
+
+        <a href="{{ route('admin.category.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'category' }"
+            @click="activeMenu = 'category'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-thumbtack mr-3"></i>
+            <span>Danh mục</span>
+        </a>
+
+        <a href="{{ route('admin.brand.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'brand' }"
+            @click="activeMenu = 'brand'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-copyright mr-3"></i>
+            <span>Nhãn hàng cung cấp</span>
+        </a>
+
+        <a href="{{ route('admin.attribute.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'attribute' }"
+            @click="activeMenu = 'attribute'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-tags mr-3"></i>
+            <span>Thuộc tính của sản phẩm</span>
+        </a>
+
+        <a href="{{ route('admin.supplier.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'supplier' }"
+            @click="activeMenu = 'supplier'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-truck-field-un mr-3"></i>
+            <span>Nhà cung cấp</span>
+        </a>
+
+        <a href="{{ route('admin.coupon.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'coupon' }"
+            @click="activeMenu = 'coupon'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-ticket mr-3"></i>
+            <span>Coupons</span>
+        </a>
+
+        <a href="{{ route('admin.cart.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'cart' }"
+            @click="activeMenu = 'cart'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-cart-shopping mr-3"></i>
+            <span>Thông tin giỏ hàng</span>
+        </a>
+
+        <a href="{{ route('admin.order.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'order' }"
+            @click="activeMenu = 'order'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-clipboard-check mr-3"></i>
+            <span>Thông tin đơn hàng</span>
+        </a>
+
+        <a href="{{ route('admin.payment.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'payment' }"
+            @click="activeMenu = 'payment'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-credit-card mr-3"></i>
+            <span>Thông tin phương thức thanh toán</span>
+        </a>
+
+        <hr>
+
+        <a href="{{ route('admin.user.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'user' }"
+            @click="activeMenu = 'user'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fa-solid fa-user-secret mr-3"></i>
+            <span>Người dùng</span>
+        </a>
+
 
         <a href="#"
             :class="{ 'bg-gray-800 text-white': activeMenu === 'settings' }"

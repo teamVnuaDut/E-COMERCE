@@ -34,6 +34,103 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/products/{id}/edit', function () {
             return view('admin.pages.products.edit');
         })->name('admin.product.edit');
+
+        //categories
+        Route::get('/admin/category', function () {
+            return view('admin.pages.category.index');
+        })->name('admin.category.index');
+        Route::get('/admin/category/create', function () {
+            return view('admin.pages.category.create');
+        })->name('admin.category.create');
+        Route::get('/admin/category/{id}/edit', function () {
+            return view('admin.pages.category.edit');
+        })->name('admin.category.edit');
+
+        //Brand
+        Route::get('/admin/brand', function () {
+            return view('admin.pages.brand.index');
+        })->name('admin.brand.index');
+        Route::get('/admin/brand/create', function () {
+            return view('admin.pages.brand.create');
+        })->name('admin.brand.create');
+        Route::get('/admin/brand/{id}/edit', function () {
+            return view('admin.pages.brand.edit');
+        })->name('admin.brand.edit');
+
+        //Attribute
+        Route::get('/admin/attribute', function () {
+            return view('admin.pages.attribute.index');
+        })->name('admin.attribute.index');
+        Route::get('/admin/attribute/create', function () {
+            return view('admin.pages.attribute.create');
+        })->name('admin.attribute.create');
+        Route::get('/admin/attribute/{id}/edit', function () {
+            return view('admin.pages.attribute.edit');
+        })->name('admin.attribute.edit');
+
+        //Supplier
+        Route::get('/admin/supplier', function () {
+            return view('admin.pages.supplier.index');
+        })->name('admin.supplier.index');
+        Route::get('/admin/supplier/create', function () {
+            return view('admin.pages.supplier.create');
+        })->name('admin.supplier.create');
+        Route::get('/admin/supplier/{id}/edit', function () {
+            return view('admin.pages.supplier.edit');
+        })->name('admin.supplier.edit');
+
+        //User
+        Route::get('/admin/user', function () {
+            return view('admin.pages.user.index');
+        })->name('admin.user.index');
+        Route::get('/admin/user/edit', function () {
+            return view('admin.pages.user.edit');
+        })->name('admin.user.edit');
+
+        //Coupon
+        Route::get('/admin/coupon', function () {
+            return view('admin.pages.coupon.index');
+        })->name('admin.coupon.index');
+        Route::get('/admin/coupon/create', function () {
+            return view('admin.pages.coupon.create');
+        })->name('admin.coupon.create');
+        Route::get('/admin/coupon/{id}/edit', function () {
+            return view('admin.pages.coupon.edit');
+        })->name('admin.coupon.edit');
+
+        //Cart
+        Route::get('/admin/cart', function () {
+            return view('admin.pages.cart.index');
+        })->name('admin.cart.index');
+        Route::get('/admin/cart/create', function () {
+            return view('admin.pages.cart.create');
+        })->name('admin.cart.create');
+        Route::get('/admin/cart/{id}/edit', function () {
+            return view('admin.pages.cart.edit');
+        })->name('admin.cart.edit');
+
+        //Order
+        Route::get('/admin/order', function () {
+            return view('admin.pages.order.index');
+        })->name('admin.order.index');
+        Route::get('/admin/order/create', function () {
+            return view('admin.pages.order.create');
+        })->name('admin.order.create');
+        Route::get('/admin/order/{id}/edit', function () {
+            return view('admin.pages.order.edit');
+        })->name('admin.order.edit');
+
+        //Payment
+        Route::get('/admin/payment', function () {
+            return view('admin.pages.payment.index');
+        })->name('admin.payment.index');
+        Route::get('/admin/payment/{id}/edit', function () {
+            return view('admin.pages.payment.edit');
+        })->name('admin.payment.edit');
+        Route::get('/admin/payment/create', function () {
+            return view('admin.pages.payment.create');
+        })->name('admin.payment.create');
+        //Shipping
     });
 
 // Manager

@@ -1,12 +1,6 @@
 <div class="bg-white p-6 rounded-2xl shadow">
     <h2 class="text-xl font-semibold mb-4">➕ Tạo mới sản phẩm</h2>
 
-    @if (session()->has('success'))
-    <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
-        {{ session('success') }}
-    </div>
-    @endif
-
     <form wire:submit.prevent="save" class="space-y-4">
         <div>
             <label class="block font-medium">Tên sản phẩm</label>
@@ -15,37 +9,41 @@
         </div>
 
         <div>
+            <label class="block font-medium">Slug</label>
+            <input type="text" wire:model="slug" class="w-full border rounded p-2">
+            @error('slug') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
+
+        <div>
             <label class="block font-medium">SKU</label>
             <input type="text" wire:model="sku" class="w-full border rounded p-2">
             @error('sku') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label class="block font-medium">Giá</label>
-                <input type="number" wire:model="price" class="w-full border rounded p-2">
-                @error('price') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
-            <div>
-                <label class="block font-medium">Giá Sale</label>
-                <input type="number" wire:model="sale_price" class="w-full border rounded p-2">
-                @error('sale_price') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
+        <div>
+            <label class="block font-medium">Danh mục</label>
+            <select wire:model="category_id" class="w-full border rounded p-2">
+                <option value="">-- Chọn danh mục --</option>
+                @foreach($categories as $cat)
+                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                @endforeach
+            </select>
+            @error('category_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
 
         <div>
-            <label class="block font-medium">Số lượng tồn kho</label>
-            <input type="number" wire:model="stock_quantity" class="w-full border rounded p-2">
-            @error('stock_quantity') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            <label class="block font-medium">Giá</label>
+            <input type="number" wire:model="price" class="w-full border rounded p-2">
+            @error('price') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
 
         <div>
             <label class="block font-medium">Trạng thái</label>
             <select wire:model="status" class="w-full border rounded p-2">
-                <option value="draft">Nháp</option>
+                <option value="draft">Bản nháp</option>
                 <option value="pending">Chờ duyệt</option>
-                <option value="published">Đã bày bán</option>
-                <option value="archived">Lưu trữ trong kho</option>
+                <option value="published">Đã xuất bản</option>
+                <option value="archived">Lưu trữ</option>
             </select>
             @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>

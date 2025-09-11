@@ -33,7 +33,13 @@
                 <td class="px-4 py-2 border">{{ ucfirst($product->status) }}</td>
                 <td class="px-4 py-2 border">{{ $product->created_at->format('d/m/Y') }}</td>
                 <td class="px-4 py-2 border">
-                    {{-- Nút sửa / xóa sẽ đặt ở đây sau --}}
+                    <a href="{{ route('admin.product.edit', $product->id) }}"
+                        class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Sửa</a>
+
+                    <button wire:click="confirmDelete({{ $product->id }})"
+                        class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 ml-2">
+                        Xóa
+                    </button>
                 </td>
             </tr>
             @endforeach
