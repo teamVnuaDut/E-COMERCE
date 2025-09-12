@@ -151,6 +151,17 @@
         </a>
         @endif
 
+        @if(Auth::user()->role === 'admin')
+        <a href="{{ route('admin.setting.index') }}"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'settings' }"
+            @click="activeMenu = 'settings'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fas fa-cog mr-3"></i>
+            <span>Cài đặt hệ thống</span>
+        </a>
+        @endif
+
+        @if(Auth::user()->role === 'manager')
         <a href="#"
             :class="{ 'bg-gray-800 text-white': activeMenu === 'settings' }"
             @click="activeMenu = 'settings'"
@@ -158,6 +169,17 @@
             <i class="fas fa-cog mr-3"></i>
             <span>Cài đặt hệ thống</span>
         </a>
+        @endif
+
+        @if(Auth::user()->role === 'staff')
+        <a href="#"
+            :class="{ 'bg-gray-800 text-white': activeMenu === 'settings' }"
+            @click="activeMenu = 'settings'"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-800 hover:text-white transition">
+            <i class="fas fa-cog mr-3"></i>
+            <span>Cài đặt hệ thống</span>
+        </a>
+        @endif
 
         <form action="{{ route('logout') }}" method="POST">
             @csrf
