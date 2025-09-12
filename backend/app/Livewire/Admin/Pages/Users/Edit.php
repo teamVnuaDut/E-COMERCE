@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Admin\Pages\User;
+namespace App\Livewire\Admin\Pages\Users;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -10,24 +10,26 @@ class Edit extends Component
 {
     use WithFileUploads;
 
+    public int $id;
+    public User $user;
+
     public $name, $email, $phone, $address, $avatar, $newAvatar;
-    public $role, $status, $created_at, $updated_at;
+    public $role, $status;
 
     public function mount()
     {
-        $user = Auth::user();
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->phone = $user->phone;
-        $this->address = $user->address;
-        $this->avatar = $user->avatar;
-        $this->role = $user->role;
-        $this->status = $user->status;
-        $this->created_at = $user->created_at->format('d/m/Y H:i');
-        $this->updated_at = $user->updated_at->format('d/m/Y H:i');
+        $this->user = User::findOrFail($this->id);
+
+        $this->name = $this->user->name;
+        $this->email = $this->user->email;
+        $this->phone = $this->user->phone;
+        $this->address = $this->user->address;
+        $this->avatar = $this->user->avatar;
+        $this->role = $this->user->role;
+        $this->status = $this->user->status;
     }
 
-    public function updateProfile()
+    public function updateUser()
     {
         $this->validate([
             'name' => 'required|string|max:255',
@@ -36,7 +38,8 @@ class Edit extends Component
             'newAvatar' => 'nullable|image|max:2048',
         ]);
 
-        $user = Auth::user();
+        $user = $this->user;
+
         $user->name = $this->name;
         $user->phone = $this->phone;
         $user->address = $this->address;
@@ -48,11 +51,11 @@ class Edit extends Component
 
         $user->save();
 
-        return redirect()->route('admin.user.index')->with('success', 'Thong tin da duoc cap nhat!');
+        return redirect()->route('admin.users.index')->with('success', 'Thông tin đã được cập nhật!');
     }
 
     public function render()
     {
-        return view('livewire.admin.pages.user.edit');
+        return view('livewire.admin.pages.users.edit');
     }
 }

@@ -12,7 +12,7 @@
     @include('admin.components.header')
     @include('admin.components.sidebar')
 
-    <main class="ml-64 p-8 pt-24 bg-[#ede0d4] text-[#1a1a1a] p-5">
+    <main class="ml-64 p-8 pt-24 bg-[#ede0d4] text-[#1a1a1a] p-5 pb-20">
         @yield('content')
     </main>
 
