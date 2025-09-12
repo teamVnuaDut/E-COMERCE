@@ -46,93 +46,55 @@
             </a>
 
             @if(Auth::user()->role === 'admin')
-            <a href="{{ route('admin.user.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'users' }"
-                @click="activeMenu = 'users'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fas fa-users mr-3"></i>
-                <span>Quản lý người dùng</span>
-            </a>
+            <div x-data="{ open: false }" x-effect="open = (activeMenu === 'users')">
+                <button
+                    @click="activeMenu = 'users'; open = !open"
+                    :class="activeMenu === 'users' ? 'bg-indigo-600 text-white' : 'text-gray-300 hover:text-white hover:bg-gray-800'"
+                    class="flex items-center w-full px-4 py-3 rounded-lg transition-all duration-200 ease-in-out">
+                    <i class="fas fa-users mr-3"></i>
+                    <span>Quản lý người dùng</span>
+                    <i class="fas fa-chevron-down ml-auto transform transition-transform"
+                        :class="open ? 'rotate-180' : 'rotate-0'"></i>
+                </button>
 
-            <a href="{{ route('admin.product.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'products' }"
-                @click="activeMenu = 'products'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fas fa-box mr-3"></i>
-                <span>Sản phẩm</span>
-            </a>
+                <div x-show="open" x-transition class="mt-2 space-y-1">
+                    <a href="{{ route('admin.users.index') }}"
+                        :class="request()->routeIs('admin.users.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:bg-gray-100'"
+                        class="flex items-center px-6 py-2 text-sm rounded transition">
+                        📋 Danh sách người dùng
+                    </a>
+                    <a href="{{ route('admin.user.index') }}"
+                        :class="request()->routeIs('admin.user.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:bg-gray-100'"
+                        class="flex items-center px-6 py-2 text-sm rounded transition">
+                        🙋‍♂️ Người dùng hiện tại
+                    </a>
+                </div>
+            </div>
 
-            <a href="{{ route('admin.category.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'category' }"
-                @click="activeMenu = 'category'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-thumbtack mr-3"></i>
-                <span>Danh mục</span>
-            </a>
+            @php
+            $adminMenus = [
+            ['key' => 'products', 'icon' => 'fas fa-box', 'label' => 'Sản phẩm', 'route' => 'admin.product.index'],
+            ['key' => 'category', 'icon' => 'fa-solid fa-thumbtack', 'label' => 'Danh mục', 'route' => 'admin.category.index'],
+            ['key' => 'brand', 'icon' => 'fa-solid fa-copyright', 'label' => 'Nhãn hàng cung cấp', 'route' => 'admin.brand.index'],
+            ['key' => 'attribute', 'icon' => 'fa-solid fa-tags', 'label' => 'Thuộc tính của sản phẩm', 'route' => 'admin.attribute.index'],
+            ['key' => 'supplier', 'icon' => 'fa-solid fa-truck-field-un', 'label' => 'Nhà cung cấp', 'route' => 'admin.supplier.index'],
+            ['key' => 'coupon', 'icon' => 'fa-solid fa-ticket', 'label' => 'Coupons', 'route' => 'admin.coupon.index'],
+            ['key' => 'cart', 'icon' => 'fa-solid fa-cart-shopping', 'label' => 'Thông tin giỏ hàng', 'route' => 'admin.cart.index'],
+            ['key' => 'order', 'icon' => 'fa-solid fa-clipboard-check', 'label' => 'Thông tin đơn hàng', 'route' => 'admin.order.index'],
+            ['key' => 'payment', 'icon' => 'fa-solid fa-credit-card', 'label' => 'Thông tin phương thức thanh toán', 'route' => 'admin.payment.index'],
+            ['key' => 'shipping', 'icon' => 'fa-solid fa-truck', 'label' => 'Thông tin vận chuyển', 'route' => 'admin.shipping.index'],
+            ];
+            @endphp
 
-            <a href="{{ route('admin.brand.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'brand' }"
-                @click="activeMenu = 'brand'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-copyright mr-3"></i>
-                <span>Nhãn hàng cung cấp</span>
+            @foreach ($adminMenus as $item)
+            <a href="{{ route($item['route']) }}"
+                :class="{ 'bg-indigo-600 text-white': activeMenu === '{{ $item['key'] }}' }"
+                @click="activeMenu = '{{ $item['key'] }}'"
+                class="flex items-center px-4 py-3 rounded-lg transition hover:bg-gray-800 hover:text-white">
+                <i class="{{ $item['icon'] }} mr-3"></i>
+                <span>{{ $item['label'] }}</span>
             </a>
-
-            <a href="{{ route('admin.attribute.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'attribute' }"
-                @click="activeMenu = 'attribute'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-tags mr-3"></i>
-                <span>Thuộc tính của sản phẩm</span>
-            </a>
-
-            <a href="{{ route('admin.supplier.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'supplier' }"
-                @click="activeMenu = 'supplier'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-truck-field-un mr-3"></i>
-                <span>Nhà cung cấp</span>
-            </a>
-
-            <a href="{{ route('admin.coupon.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'coupon' }"
-                @click="activeMenu = 'coupon'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-ticket mr-3"></i>
-                <span>Coupons</span>
-            </a>
-
-            <a href="{{ route('admin.cart.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'cart' }"
-                @click="activeMenu = 'cart'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-cart-shopping mr-3"></i>
-                <span>Thông tin giỏ hàng</span>
-            </a>
-
-            <a href="{{ route('admin.order.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'order' }"
-                @click="activeMenu = 'order'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-clipboard-check mr-3"></i>
-                <span>Thông tin đơn hàng</span>
-            </a>
-
-            <a href="{{ route('admin.payment.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'payment' }"
-                @click="activeMenu = 'payment'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-credit-card mr-3"></i>
-                <span>Thông tin phương thức thanh toán</span>
-            </a>
-
-            <a href="{{ route('admin.shipping.index') }}"
-                :class="{ 'bg-indigo-600 text-white': activeMenu === 'shipping' }"
-                @click="activeMenu = 'shipping'"
-                class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-800 hover:text-white">
-                <i class="fa-solid fa-truck mr-3"></i>
-                <span>Thông tin vận chuyển</span>
-            </a>
+            @endforeach
             @endif
 
             @if(Auth::user()->role === 'manager')

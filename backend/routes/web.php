@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Admin\Pages\Product\Index as ProductIndex;
+use App\Livewire\Admin\Pages\Users\Edit;
+use App\Livewire\Admin\Pages\Users\Show;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -79,13 +81,28 @@ Route::middleware(['auth', 'check_role:admin'])
             return view('admin.pages.supplier.edit');
         })->name('admin.supplier.edit');
 
-        //User
+        //Admin profile
         Route::get('/admin/user', function () {
             return view('admin.pages.user.index');
         })->name('admin.user.index');
         Route::get('/admin/user/edit', function () {
             return view('admin.pages.user.edit');
         })->name('admin.user.edit');
+
+        //Users
+        Route::get('/admin/users', function () {
+            return view('admin.pages.users.index');
+        })->name('admin.users.index');
+        Route::get('/admin/users/create', function () {
+            return view('admin.pages.users.create');
+        })->name('admin.users.create');
+        Route::get('/admin/users/{id}/edit', function ($id) {
+            return view('admin.pages.users.edit', ['id' => $id]);
+        })->name('admin.users.edit');
+        // Route::get('/admin/users/{id}/edit', Edit::class)->name('admin.users.edit');
+        Route::get('/admin/users/{id}', function ($id) {
+            return view('admin.pages.users.show', ['id' => $id]);
+        })->name('admin.users.show');
 
         //Coupon
         Route::get('/admin/coupon', function () {
