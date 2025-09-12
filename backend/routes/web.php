@@ -158,6 +158,11 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/shipping/create', function () {
             return view('admin.pages.shipping.create');
         })->name('admin.shipping.create');
+
+        //Setting
+        Route::get('/admin/setting', function () {
+            return view('admin.pages.setting.index');
+        })->name('admin.setting.index');
     });
 
 // Manager
