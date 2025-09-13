@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Livewire\Admin\Pages\Product\Index as ProductIndex;
 use App\Livewire\Admin\Pages\Users\Edit;
 use App\Livewire\Admin\Pages\Users\Show;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,9 +45,12 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/category/create', function () {
             return view('admin.pages.category.create');
         })->name('admin.category.create');
-        Route::get('/admin/category/{id}/edit', function () {
-            return view('admin.pages.category.edit');
+        Route::get('/admin/category/{category}/edit', function (Category $category) {
+            return view('admin.pages.category.edit', ['category' => $category]);
         })->name('admin.category.edit');
+        Route::get('/admin/category/{category}', function (Category $category) {
+            return view('admin.pages.category.show', ['category' => $category]);
+        })->name('admin.category.show');
 
         //Brand
         Route::get('/admin/brand', function () {
