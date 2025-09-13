@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Chỉnh sửa danh mục')
+@section('title', 'Tạo mới danh mục')
 
 @section('content')
-@livewire('admin.pages.category.edit')
+@livewire('admin.pages.category.create')
 @endsection
