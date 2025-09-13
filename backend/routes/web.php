@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Livewire\Admin\Pages\Product\Index as ProductIndex;
 use App\Livewire\Admin\Pages\Users\Edit;
 use App\Livewire\Admin\Pages\Users\Show;
+use App\Models\Attribute;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
@@ -70,9 +71,12 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/attribute/create', function () {
             return view('admin.pages.attribute.create');
         })->name('admin.attribute.create');
-        Route::get('/admin/attribute/{id}/edit', function () {
-            return view('admin.pages.attribute.edit');
+        Route::get('/admin/attribute/{attribute}/edit', function (Attribute $attribute) {
+            return view('admin.pages.attribute.edit', ['attribute' => $attribute]);
         })->name('admin.attribute.edit');
+        Route::get('/admin/attribute/{attribute}', function (Attribute $attribute) {
+            return view('admin.pages.attribute.show', ['attribute' => $attribute]);
+        })->name('admin.attribute.show');
 
         //Supplier
         Route::get('/admin/supplier', function () {
