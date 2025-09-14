@@ -22,8 +22,9 @@ class Supplier extends Model
         'bank_account_number',
         'bank_account_name',
         'status',
-        'notes'
+        'notes',
     ];
+
 
     // Quan hệ: Sản phẩm từ nhà cung cấp
     public function products(): HasMany

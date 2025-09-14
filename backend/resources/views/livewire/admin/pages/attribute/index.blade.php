@@ -75,4 +75,19 @@
     <div class="mt-6">
         {{ $attributes->links() }}
     </div>
+    <div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">⚠️ Xác nhận xoá</h3>
+            <p class="text-sm text-gray-600 mb-6">Bạn có chắc muốn xoá thuộc tính này không?</p>
+            <div class="flex justify-end gap-3">
+                <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-100 text-gray-800 rounded hover:bg-gray-200 text-sm">Huỷ</button>
+                <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm">Xoá</button>
+            </div>
+        </div>
+    </div>
+    @if (session()->has('success'))
+    <div class="px-4 py-3 bg-green-100 text-green-800 rounded-md text-sm font-medium">
+        {{ session('success') }}
+    </div>
+    @endif
 </div>
