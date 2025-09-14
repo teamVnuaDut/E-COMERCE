@@ -3,5 +3,5 @@
 @section('title', 'Chỉnh sửa thuộc tính sản phẩm')
 
 @section('content')
-@livewire('admin.pages.attribute.edit')
+@livewire('admin.pages.attribute.edit', ['attribute' => $attribute])
 @endsection

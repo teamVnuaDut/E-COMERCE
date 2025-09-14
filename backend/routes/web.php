@@ -5,7 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Livewire\Admin\Pages\Product\Index as ProductIndex;
 use App\Livewire\Admin\Pages\Users\Edit;
 use App\Livewire\Admin\Pages\Users\Show;
+use App\Models\Attribute;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -34,9 +37,12 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/products/create', function () {
             return view('admin.pages.products.create');
         })->name('admin.product.create');
-        Route::get('/admin/products/{id}/edit', function () {
-            return view('admin.pages.products.edit');
+        Route::get('/admin/products/{product}/edit', function (Product $product) {
+            return view('admin.pages.products.edit', ['product' => $product]);
         })->name('admin.product.edit');
+        Route::get('/admin/product/{product}', function (Product $product) {
+            return view('admin.pages.products.show', ['product' => $product]);
+        })->name('admin.product.show');
 
         //categories
         Route::get('/admin/category', function () {
@@ -70,9 +76,12 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/attribute/create', function () {
             return view('admin.pages.attribute.create');
         })->name('admin.attribute.create');
-        Route::get('/admin/attribute/{id}/edit', function () {
-            return view('admin.pages.attribute.edit');
+        Route::get('/admin/attribute/{attribute}/edit', function (Attribute $attribute) {
+            return view('admin.pages.attribute.edit', ['attribute' => $attribute]);
         })->name('admin.attribute.edit');
+        Route::get('/admin/attribute/{attribute}', function (Attribute $attribute) {
+            return view('admin.pages.attribute.show', ['attribute' => $attribute]);
+        })->name('admin.attribute.show');
 
         //Supplier
         Route::get('/admin/supplier', function () {
@@ -81,9 +90,12 @@ Route::middleware(['auth', 'check_role:admin'])
         Route::get('/admin/supplier/create', function () {
             return view('admin.pages.supplier.create');
         })->name('admin.supplier.create');
-        Route::get('/admin/supplier/{id}/edit', function () {
-            return view('admin.pages.supplier.edit');
+        Route::get('/admin/supplier/{supplier}/edit', function (Supplier $supplier) {
+            return view('admin.pages.supplier.edit', ['supplier' => $supplier]);
         })->name('admin.supplier.edit');
+        Route::get('/admin/supplier/{supplier}', function (Supplier $supplier) {
+            return view('admin.pages.supplier.show', ['supplier' => $supplier]);
+        })->name('admin.supplier.show');
 
         //Admin profile
         Route::get('/admin/user', function () {

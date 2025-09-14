@@ -2,84 +2,75 @@
 
 namespace App\Livewire\Admin\Pages\Product;
 
-use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Brand;
 use App\Models\Supplier;
 use Livewire\Component;
 
 class Create extends Component
 {
-    public $name, $slug, $sku, $short_description, $description;
+    public $name, $slug, $sku;
+    public $short_description, $description;
     public $category_id, $brand_id, $supplier_id;
-    public $price = 0, $cost_price, $sale_price, $sale_start, $sale_end;
-    public $stock_quantity = 0, $low_stock_threshold = 5, $manage_stock = true, $in_stock = true;
-    public $weight, $lenght, $width, $height;
+    public $price = 0, $cost_price, $sale_price;
+    public $sale_start, $sale_end;
+    public $stock_quantity = 0, $low_stock_threshold = 5;
+    public $manage_stock = true, $in_stock = true;
+    public $weight, $length, $width, $height;
     public $meta_title, $meta_description, $meta_keywords;
-    public $status = 'draft', $is_featured = false, $is_virtual = false;
+    public $status = 'draft', $is_featured = false, $is_virtual = false, $is_active = true;
+    // public $requires_shipping = false;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'slug' => 'required|string|max:255|unique:products,slug',
-        'sku' => 'required|string|max:100|unique:products,sku',
-        'category_id' => 'required|exists:categories,id',
-        'brand_id' => 'nullable|exists:brands,id',
-        'supplier_id' => 'nullable|exists:suppliers,id',
-        'price' => 'required|numeric|min:0',
-        'cost_price' => 'nullable|numeric|min:0',
-        'sale_price' => 'nullable|numeric|min:0',
-        'stock_quantity' => 'required|integer|min:0',
-        'low_stock_threshold' => 'nullable|integer|min:0',
-        'status' => 'required|in:draft,pending,published,archived',
-        'is_featured' => 'boolean',
-        'is_virtual' => 'boolean',
-    ];
-
+    public function rules()
+    {
+        return array_merge([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|unique:products,slug',
+            'sku' => 'required|string|unique:products,sku',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
+            'price' => 'required|numeric|min:0',
+            'cost_price' => 'nullable|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0',
+            'sale_start' => 'nullable|date',
+            'sale_end' => 'nullable|date|after_or_equal:sale_start',
+            'stock_quantity' => 'required|integer|min:0',
+            'low_stock_threshold' => 'required|integer|min:0',
+            'manage_stock' => 'boolean',
+            'in_stock' => 'boolean',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string|max:255',
+            'status' => 'required|in:draft,pending,published,archived',
+            'is_featured' => 'boolean',
+            'is_virtual' => 'boolean',
+            'is_active' => 'boolean',
+        ], $this->is_virtual ? [] : [
+            'weight' => 'nullable|numeric|min:0',
+            'length' => 'nullable|numeric|min:0',
+            'width' => 'nullable|numeric|min:0',
+            'height' => 'nullable|numeric|min:0',
+        ]);
+    }
 
     public function save()
     {
         $this->validate();
 
-        Product::create([
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'sku' => $this->sku,
-            'short_description' => $this->short_description,
-            'description' => $this->description,
-            'category_id' => $this->category_id,
-            'brand_id' => $this->brand_id,
-            'supplier_id' => $this->supplier_id,
-            'price' => $this->price,
-            'cost_price' => $this->cost_price,
-            'sale_price' => $this->sale_price,
-            'sale_start' => $this->sale_start,
-            'sale_end' => $this->sale_end,
-            'stock_quantity' => $this->stock_quantity,
-            'low_stock_threshold' => $this->low_stock_threshold,
-            'manage_stock' => $this->manage_stock,
-            'in_stock' => $this->in_stock,
-            'weight' => $this->weight,
-            'length' => $this->length,
-            'width' => $this->width,
-            'height' => $this->height,
-            'meta_title' => $this->meta_title,
-            'meta_description' => $this->meta_description,
-            'meta_keywords' => $this->meta_keywords,
-            'status' => $this->status,
-            'is_featured' => $this->is_featured,
-            'is_virtual' => $this->is_virtual,
-        ]);
+        Product::create($this->only(array_keys($this->rules())));
 
-
-        session()->flash('success', 'San pham duoc tao thanh cong');
+        session()->flash('success', '✅ Sản phẩm đã được tạo!');
         return redirect()->route('admin.product.index');
     }
+
     public function render()
     {
         return view('livewire.admin.pages.product.create', [
-            'categories' => Category::all(),
-            'brands' => Brand::all(),
-            'suppliers' => Supplier::all(),
+            'categories' => Category::pluck('name', 'id'),
+            'brands' => Brand::pluck('name', 'id'),
+            'suppliers' => Supplier::pluck('name', 'id'),
         ]);
     }
 }

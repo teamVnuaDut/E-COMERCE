@@ -147,7 +147,7 @@ class Order extends Model
     }
 
     // Lấy tổng số lượng sản phẩm
-    public function getTotalQuantityAttribute(): int
+    public function getTotalQuantityAttribute()
     {
         return $this->items->sum('quantity');
     }
@@ -230,12 +230,6 @@ class Order extends Model
         }
 
         return $this->save();
-    }
-
-    // Tính tổng số lượng sản phẩm
-    public function getTotalQuantityAttribute(): int
-    {
-        return $this->items->sum('quantity');
     }
 
     // Kiểm tra đã thanh toán
